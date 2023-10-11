@@ -14,12 +14,6 @@ export class ProductManagementServiceService {
 
 
   getProducts() {
-    var headers = new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Access-Control-Allow-Origin', '*')
-    this.http.get('http://localhost:3000/products').subscribe(item =>
-      this.productSubject = new BehaviorSubject(item as Product[])
-    )
-
+    return this.http.get('http://localhost:3000/products')
   }
 }

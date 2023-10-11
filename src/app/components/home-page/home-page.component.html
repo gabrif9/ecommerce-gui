@@ -56,8 +56,9 @@
   <!-- product list -->
   <div class="w-4/5">
     <!-- card -->
-    <div class="grid grid-cols-3 lg:grid-cols-5 mt-3 ms-2">
-      <div class="shadow-lg shadow-gray-300 rounded-lg h-auto w-[200px]" *ngFor="let product of products">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-3 ms-2">
+      <div class="shadow-lg shadow-gray-300 rounded-lg h-auto w-[200px] mt-5" *ngFor="let product of products">
+        <div class="flex text-sm justify-center mb-1 p-2 font-bold"><span>{{ product.name }}</span></div>
         <img [src]="product.image" alt="" class="h-[170px] w-full object-contain">
         <div class="flex-col w-full">
           <div class="w-full p-1">
@@ -68,11 +69,6 @@
           </div>
         </div>
       </div>
-
-      <div class="shadow-lg shadow-gray-300 rounded-lg h-[250px] w-[200px]">
-
-      </div>
-
     </div>
 
   </div>
