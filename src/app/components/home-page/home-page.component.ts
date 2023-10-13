@@ -1,4 +1,5 @@
-import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Product, ProductList } from 'src/app/module/product.module';
 import { ProductManagementServiceService } from 'src/app/services/product-management-service.service';
 
@@ -7,10 +8,12 @@ import { ProductManagementServiceService } from 'src/app/services/product-manage
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit{
 
   products?: ProductList[]
   productsBackup?: ProductList[]
+
+  searchBar = new FormControl()
 
   categories: string[] = ["men's clothing", "jewelery", "electronics", "women's clothing"]
   selectedCategories = {
@@ -29,11 +32,28 @@ export class HomePageComponent {
     })
   }
 
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.searchBar.valueChanges.subscribe((ele: string) => {
+      if(ele.length > 1) {
+        this.products = this.productsBackup?.filter(item => {
+          return item.name.toUpperCase().includes(ele.toUpperCase())
+        })
+      } else {
+        this.products = this.productsBackup
+      }
+    })
+  }
+
+
+  /**
+   *This function filter items on the homepage based on the selected categories
+   * @param category the selected category
+   */
   filterItems(category: string) {
 
     this.selectedCategories[category as keyof typeof this.selectedCategories] = !this.selectedCategories[category as keyof typeof this.selectedCategories]
-    console.log(this.selectedCategories)
-
 
     var tmpProducts = this.productsBackup?.filter(item => {
       return this.selectedCategories[item.category as keyof typeof this.selectedCategories]
