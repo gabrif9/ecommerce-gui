@@ -13,6 +13,12 @@ export class HomePageComponent {
   productsBackup?: ProductList[]
 
   categories: string[] = ["men's clothing", "jewelery", "electronics", "women's clothing"]
+  selectedCategories = {
+    "men's clothing": false,
+    "jewelery": false,
+    "electronics": false,
+    "women's clothing": false,
+  }
 
   @ViewChildren("checkboxes") checkboxes?: QueryList<ElementRef>
 
@@ -24,9 +30,15 @@ export class HomePageComponent {
   }
 
   filterItems(category: string) {
-    var tmpProducts = this.products?.filter(item => {
-      return item.category === category
+
+    this.selectedCategories[category as keyof typeof this.selectedCategories] = !this.selectedCategories[category as keyof typeof this.selectedCategories]
+    console.log(this.selectedCategories)
+
+
+    var tmpProducts = this.productsBackup?.filter(item => {
+      return this.selectedCategories[item.category as keyof typeof this.selectedCategories]
     })
+
     this.products = tmpProducts
 
     var atLeastOneChecked = false;
