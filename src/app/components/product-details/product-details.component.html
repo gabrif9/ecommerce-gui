@@ -1,0 +1,36 @@
+<div>
+  <div class="w-full h-10 flex justify-center items-center bg-[#3d8af7]">
+    <div>
+      <span routerLink="/homePage" class="font-bold cursor-pointer">ECOMMERCE SWA</span>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 w-screen h-full">
+  <!-- image -->
+  <div class="h-full w-full flex justify-center mt-10">
+    <div class="h-[400px] w-[400px] shadow-lg shadow-gray-400 rounded-lg border p-3">
+      <img class="object-contain w-full h-full" [src]="productSelected?.image" alt="">
+    </div>
+
+  </div>
+
+
+  <!-- details and price-->
+  <div class="mt-10 p-2">
+    <!-- title -->
+    <div>
+      <span class="font-bold">{{ productSelected?.name }}</span>
+    </div>
+
+    <div class="mt-28 flex-col">
+      <div class="font-bold">Description: </div>
+      <div>{{ productSelected?.description }}</div>
+    </div>
+
+    <div class="mt-[130px] flex justify-between">
+      <div><button class="rounded-lg p-3 bg-blue-400 min-w-[100px]">Buy</button></div>
+      <div><button class="rounded-lg p-3 bg-orange-400 min-w-[100px]">Add To Cart</button></div>
+    </div>
+  </div>
+</div>

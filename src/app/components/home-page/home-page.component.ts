@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Product, ProductList } from 'src/app/module/product.module';
 import { ProductManagementServiceService } from 'src/app/services/product-management-service.service';
 
@@ -25,10 +26,11 @@ export class HomePageComponent implements OnInit{
 
   @ViewChildren("checkboxes") checkboxes?: QueryList<ElementRef>
 
-  constructor(private productManagementService: ProductManagementServiceService) {
+  constructor(private productManagementService: ProductManagementServiceService, private router: Router) {
     this.productManagementService.getProducts().subscribe(item => {
       this.products = (item as Product).products
       this.productsBackup = this.products
+      console.log(this.products)
     })
   }
 
@@ -71,5 +73,9 @@ export class HomePageComponent implements OnInit{
     if(!atLeastOneChecked) {
       this.products = this.productsBackup
     }
+  }
+
+  navigateToProduct(id: number) {
+    this.router.navigate(['/productDetails', id.toString()])
   }
 }
