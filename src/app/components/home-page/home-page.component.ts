@@ -14,6 +14,8 @@ export class HomePageComponent implements OnInit{
   products?: ProductList[]
   productsBackup?: ProductList[]
 
+  menu: boolean = false;
+
   searchBar = new FormControl()
 
   categories: string[] = ["men's clothing", "jewelery", "electronics", "women's clothing"]
@@ -77,5 +79,9 @@ export class HomePageComponent implements OnInit{
 
   navigateToProduct(id: number) {
     this.router.navigate(['/productDetails', id.toString()])
+  }
+
+  showMenu(){
+    this.menu = !this.menu
   }
 }

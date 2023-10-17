@@ -8,9 +8,9 @@
 
 <div class="flex justify-between w-full items-center mt-10">
   <!-- Search bar -->
-  <div class="w-20"></div>
+  <div></div>
   <div
-    class=" w-[50%] ml-28 flex justify-center rounded-full shadow-lg bg-gray-100 h-10 p-2 hover:scale-110 hover:transition-all transition-all ease-in-out">
+    class="z-10 w-[50%] ml-28 flex justify-center rounded-full shadow-lg bg-gray-100 h-10 p-2 hover:scale-110 hover:transition-all transition-all ease-in-out">
     <input [formControl]="searchBar" type="text" class="w-full bg-gray-100 focus:outline-none ">
     <div>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -36,12 +36,19 @@
 
     <!-- Profile -->
     <div>
-      <div class="ml-5 h-10 w-10 shadow-lg bg-gray-100 rounded-full flex justify-center items-center cursor-pointer">
+      <div class="ml-5 h-10 w-10 shadow-lg bg-gray-100 rounded-full flex justify-center items-center cursor-pointer" (mouseenter)="showMenu()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="w-8 h-8">
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
+      </div>
+      <!-- dropDown -->
+      <div [ngClass]="menu ? 'fixed opacity-100' : 'hidden opacity-0' " class="w-[130px] h-[150px] right-8 mt-2 border border-black z-20 transition-opacity duration-200" (mouseleave)="showMenu()">
+          <div class="border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center"><a href="/login">Login</a></div>
+          <div class="border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center">Profile</div>
+          <div class="border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center">Logout</div>
+          <div class="h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center">Manage Product</div>
       </div>
     </div>
   </div>
@@ -53,7 +60,8 @@
   <div class="ms-3 w-1/6">
     <ul class="shadow-lg shadow-gray-300 rounded-lg p-3 w-full">
       <li *ngFor="let category of categories; index as i"><input #checkboxes type="checkbox" class="me-5"
-          [ngClass]="{'mb-3': i != categories.length-1, 'mt-2': i === 0}" (change)="filterItems(category)"><span class="text-sm">{{ category | uppercase }}</span></li>
+          [ngClass]="{'mb-3': i != categories.length-1, 'mt-2': i === 0}" (change)="filterItems(category)"><span
+          class="text-sm">{{ category | uppercase }}</span></li>
     </ul>
   </div>
   <div class="h-full border border-gray-200 me-1 ms-2"></div>
@@ -69,7 +77,8 @@
 
         <div class="flex w-full">
           <div class="w-full p-1">
-            <button (click)="navigateToProduct(product._id)"class="bg-orange-400 rounded-md px-3 py-2 w-full hover:bg-orange-500">Details</button>
+            <button (click)="navigateToProduct(product._id)"
+              class="bg-orange-400 rounded-md px-3 py-2 w-full hover:bg-orange-500">Details</button>
           </div>
           <div class="w-full p-1">
             <button class="bg-blue-400 rounded-md px-3 py-2 w-full hover:bg-blue-500">Buy</button>

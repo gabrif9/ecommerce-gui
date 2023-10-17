@@ -10,6 +10,7 @@ export class LoginService {
 
   token: string = ''
   authenticated: boolean = false;
+  email: string = ''
 
   resMessageSubject: BehaviorSubject<string> = new BehaviorSubject('')
 
@@ -21,6 +22,7 @@ export class LoginService {
         next: (res: any) => {
           this.token = res.token
           this.authenticated = true
+          this.email = email
           this.router.navigate(['/homePage'])
         },
         error: (err) => {
