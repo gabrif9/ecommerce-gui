@@ -9,6 +9,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { CartComponent } from './components/cart/cart.component';
+import { ManageProductComponent } from './components/manage-product/manage-product.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { SignupComponent } from './components/signup/signup.component';
     HomePageComponent,
     ProductDetailsComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    OrdersComponent,
+    CartComponent,
+    ManageProductComponent
   ],
   imports: [
     BrowserModule,

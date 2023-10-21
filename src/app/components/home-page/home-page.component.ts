@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Product, ProductList } from 'src/app/module/product.module';
+import { LoginService } from 'src/app/services/login.service';
 import { ProductManagementServiceService } from 'src/app/services/product-management-service.service';
 
 @Component({
@@ -28,7 +29,7 @@ export class HomePageComponent implements OnInit{
 
   @ViewChildren("checkboxes") checkboxes?: QueryList<ElementRef>
 
-  constructor(private productManagementService: ProductManagementServiceService, private router: Router) {
+  constructor(private productManagementService: ProductManagementServiceService, private router: Router, private loginService: LoginService) {
     this.productManagementService.getProducts().subscribe(item => {
       this.products = (item as Product).products
       this.productsBackup = this.products
@@ -83,5 +84,9 @@ export class HomePageComponent implements OnInit{
 
   showMenu(){
     this.menu = !this.menu
+  }
+
+  logout(){
+    this.loginService.logout()
   }
 }

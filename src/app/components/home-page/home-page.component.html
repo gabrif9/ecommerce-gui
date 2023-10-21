@@ -36,7 +36,7 @@
 
     <!-- Profile -->
     <div>
-      <div class="ml-5 h-10 w-10 shadow-lg bg-gray-100 rounded-full flex justify-center items-center cursor-pointer" (mouseenter)="showMenu()">
+      <div class="ml-5 h-10 w-10 shadow-lg bg-gray-100 rounded-full flex justify-center items-center cursor-pointer" (mouseenter)="showMenu()" (click)="showMenu()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="w-8 h-8">
           <path stroke-linecap="round" stroke-linejoin="round"
@@ -44,10 +44,10 @@
         </svg>
       </div>
       <!-- dropDown -->
-      <div [ngClass]="menu ? 'fixed opacity-100' : 'hidden opacity-0' " class="w-[130px] h-[150px] right-8 mt-2 border border-black z-20 transition-opacity duration-200" (mouseleave)="showMenu()">
+      <div [ngClass]="menu ? 'fixed opacity-100' : 'hidden opacity-0' " class="w-[130px] h-[150px] right-8 mt-2 border border-black z-20 transition-opacity duration-200" (mouseleave)="showMenu()" >
           <div class="border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center"><a href="/login">Login</a></div>
-          <div class="border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center">Profile</div>
-          <div class="border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center">Logout</div>
+          <div class="border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center"><a href="/orders">Orders</a></div>
+          <div (click)="logout()" class="cursor-pointer border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center">Logout</div>
           <div class="h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center">Manage Product</div>
       </div>
     </div>
@@ -69,8 +69,8 @@
   <!-- product list -->
   <div class="w-4/5">
     <!-- card -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-3 ms-2">
-      <div class="shadow-lg shadow-gray-300 rounded-lg h-auto w-[200px] mt-5" *ngFor="let product of products">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-3 ms-2">
+      <div class="shadow-lg shadow-gray-300 rounded-lg h-auto w-[250px] md:w-[200px] mt-5" *ngFor="let product of products">
         <div class="flex text-sm justify-center mb-1 p-2 font-bold h-[70px]"><span>{{ product.name }}</span></div>
         <img [src]="product.image" alt="" class="h-[170px] w-full object-contain">
         <div class="my-2 flex justify-end me-2"><span>Price: {{product.price}}</span></div>
