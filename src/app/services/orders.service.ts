@@ -13,8 +13,6 @@ export class OrdersService {
   constructor(private http: HttpClient) { }
 
   getOrders() {
-
-
     return this.http.get('http://localhost:3000/orders', { headers: this.headers })
   }
 
