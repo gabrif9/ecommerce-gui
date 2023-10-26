@@ -15,7 +15,7 @@ export class LoginService{
   constructor(private http: HttpClient, private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if(localStorage.getItem('userToken')) {
+    if(sessionStorage.getItem('userToken')) {
       return true
     } else {
       alert('You are not logged in')
@@ -28,8 +28,8 @@ export class LoginService{
     if (!this.authenticated) {
       this.http.post('http://localhost:3000/user/login', { email: email, password: password }).subscribe({
         next: (res: any) => {
-          localStorage.setItem('userToken', res.token)
-          localStorage.setItem('userEmail', email)
+          sessionStorage.setItem('userToken', res.token)
+          sessionStorage.setItem('userEmail', email)
           this.router.navigate(['homePage'])
           return true
         },
@@ -57,8 +57,8 @@ export class LoginService{
 
 
   logout(){
-    localStorage.removeItem('userToken')
-    localStorage.removeItem('userEmail')
+    sessionStorage.removeItem('userToken')
+    sessionStorage.removeItem('userEmail')
     this.router.navigate(['homePage'])
   }
 

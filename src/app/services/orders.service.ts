@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class OrdersService {
 
-  token = localStorage.getItem('userToken')
-  email = localStorage.getItem('userEmail')
+  token = sessionStorage.getItem('userToken')
+  email = sessionStorage.getItem('userEmail')
   headers = new HttpHeaders().set('Authorization', "Bearer " + this.token!)
 
   constructor(private http: HttpClient) { }
