@@ -1,8 +1,10 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Product, ProductList } from 'src/app/module/product.module';
 import { LoginService } from 'src/app/services/login.service';
+import { OrdersService } from 'src/app/services/orders.service';
 import { ProductManagementServiceService } from 'src/app/services/product-management-service.service';
 
 @Component({
@@ -10,7 +12,7 @@ import { ProductManagementServiceService } from 'src/app/services/product-manage
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
-export class HomePageComponent implements OnInit{
+export class HomePageComponent implements OnInit {
 
   products?: ProductList[]
   productsBackup?: ProductList[]
@@ -29,11 +31,11 @@ export class HomePageComponent implements OnInit{
 
   @ViewChildren("checkboxes") checkboxes?: QueryList<ElementRef>
 
-  constructor(private productManagementService: ProductManagementServiceService, private router: Router, private loginService: LoginService) {
+  constructor(private productManagementService: ProductManagementServiceService, private router: Router, private loginService: LoginService, private orderService: OrdersService) {
     this.productManagementService.getProducts().subscribe(item => {
       this.products = (item as Product).products
       this.productsBackup = this.products
-      console.log(this.products)
+      // console.log(this.products)
     })
   }
 
@@ -41,7 +43,7 @@ export class HomePageComponent implements OnInit{
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.searchBar.valueChanges.subscribe((ele: string) => {
-      if(ele.length > 1) {
+      if (ele.length > 1) {
         this.products = this.productsBackup?.filter(item => {
           return item.name.toUpperCase().includes(ele.toUpperCase())
         })
@@ -68,12 +70,12 @@ export class HomePageComponent implements OnInit{
 
     var atLeastOneChecked = false;
     this.checkboxes!.forEach((element) => {
-      if(element.nativeElement.checked){
+      if (element.nativeElement.checked) {
         atLeastOneChecked = true
       }
     })
 
-    if(!atLeastOneChecked) {
+    if (!atLeastOneChecked) {
       this.products = this.productsBackup
     }
   }
@@ -82,11 +84,20 @@ export class HomePageComponent implements OnInit{
     this.router.navigate(['/productDetails', id.toString()])
   }
 
-  showMenu(){
+  showMenu() {
     this.menu = !this.menu
   }
 
-  logout(){
+  logout() {
     this.loginService.logout()
+  }
+
+  //when the user press "buy" button
+  addProductToCart(productToAdd: ProductList) {
+    this.orderService.addProductToCart(productToAdd)
+  }
+
+  sendProductToCart(){
+      this.orderService.sendProductToCart()
   }
 }

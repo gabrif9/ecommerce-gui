@@ -10,7 +10,7 @@ export class SignupComponent {
 
   constructor(private signUpService: LoginService){
     signUpService.resMessageSubject.subscribe(resMessage => {
-      console.log(resMessage)
+      // console.log(resMessage)
     })
   }
 
