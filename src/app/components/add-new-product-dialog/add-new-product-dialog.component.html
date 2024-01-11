@@ -1,0 +1,37 @@
+<div class="w-[280px] h-[460px] md:w-[500px] md:h-[460px]">
+  <h1 mat-dialog-title>ADD A NEW PRODUCT</h1>
+  <div mat-dialog-content>
+    <p>Please fill all the fields</p>
+    <div class="mt-3 flex justify-center px-5">
+      <form class="w-full" action="" [formGroup]="productDetailsFormGroup">
+        <div class="input-style">
+          <input id="name" type="text" formControlName="name" placeholder="Name">
+        </div>
+        <div class="input-style">
+          <input type="text" formControlName="price" placeholder="Price">
+        </div>
+        <div class="input-style">
+          <input type="text" formControlName="category" placeholder="category">
+        </div>
+        <div class="input-style">
+          <input type="text" formControlName="description" placeholder="Description">
+        </div>
+        <div class="input-style">
+          <input type="text" formControlName="image" placeholder="Image">
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <div class="flex justify-between px-3">
+    <button class="bg-red-500 rounded-lg px-2 py-1" (click)="onCloseClick()">Close</button>
+    <button class="bg-green-500 rounded-lg px-2 py-1" (click)="onDoneClick()">Done</button>
+  </div>
+</div>
+
+<!-- name: req.body.name,
+    price: req.body.price,
+    category: req.body.category,
+    description: req.body.description,
+    image: req.body.image,
+  -->

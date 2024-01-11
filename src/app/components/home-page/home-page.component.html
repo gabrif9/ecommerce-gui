@@ -36,27 +36,19 @@
 
     <!-- Profile -->
     <div>
-      <div class="ml-5 h-10 w-10 shadow-lg bg-gray-100 rounded-full flex justify-center items-center cursor-pointer"
-        (mouseenter)="showMenu()" (click)="showMenu()">
+      <button [matMenuTriggerFor]="menu" class="ml-5 h-10 w-10 shadow-lg bg-gray-100 rounded-full flex justify-center items-center cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="w-8 h-8">
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
-      </div>
-      <!-- dropDown -->
-      <div [ngClass]="menu ? 'fixed opacity-100' : 'hidden opacity-0' "
-        class="w-[130px] h-[150px] right-8 mt-2 border border-black z-20 transition-opacity duration-200"
-        (mouseleave)="showMenu()">
-        <div class="border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center"><a
-            href="/login">Login</a></div>
-        <div class="border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center"><a
-            href="/orders">Orders</a></div>
-        <div (click)="logout()"
-          class="cursor-pointer border-b border-gray-400 h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center">
-          Logout</div>
-        <div class="h-1/4 p-1 w-full bg-gray-200 flex justify-center items-center">Manage Product</div>
-      </div>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Login</button>
+        <button mat-menu-item>Orders</button>
+        <button mat-menu-item>Logout</button>
+        <button mat-menu-item>Manage Orders</button>
+      </mat-menu>
     </div>
   </div>
 </div>
@@ -72,13 +64,22 @@
 
 <div class="mt-5 flex h-screen">
   <!-- categories filter -->
-  <div class="ms-3 w-1/6 hidden md:block">
-    <ul class="shadow-lg shadow-gray-300 rounded-lg p-3 w-full">
-      <li *ngFor="let category of categories; index as i"><input #checkboxes type="checkbox" class="me-5"
-          [ngClass]="{'mb-3': i != categories.length-1, 'mt-2': i === 0}" (change)="filterItems(category)"><span
-          class="text-sm">{{ category | uppercase }}</span></li>
-    </ul>
-  </div>
+    <div class="ms-3 w-1/6 hidden md:block">
+      <ul class="shadow-lg shadow-gray-300 rounded-lg p-3 w-full">
+        <li *ngFor="let category of categories; index as i"><input #checkboxes type="checkbox" class="me-5"
+            [ngClass]="{'mb-3': i != categories.length-1, 'mt-2': i === 0}" (change)="filterItems(category)"><span
+            class="text-sm">{{ category | uppercase }}</span></li>
+      </ul>
+
+      <div class="flex justify-center">
+        <button (click)="openAddNewProductDialog()" class="mt-5 flex items-center bg-red-500 w-auto rounded-lg px-2 py-1">
+          <span class="text-lg mr-2">New Product</span>
+          <mat-icon class="mat-18">add</mat-icon>
+        </button>
+      </div>
+
+    </div>
+
   <div class="h-full border border-gray-200 me-1 ms-2 hidden md:block "></div>
 
   <!-- product list -->

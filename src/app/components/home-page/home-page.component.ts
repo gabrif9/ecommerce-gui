@@ -1,11 +1,16 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { Product, ProductList } from 'src/app/module/product.module';
 import { LoginService } from 'src/app/services/login.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ProductManagementServiceService } from 'src/app/services/product-management-service.service';
+import {
+  MatDialogRef,
+  MatDialogClose,
+  MatDialog
+} from '@angular/material/dialog';
+import { AddNewProductDialogComponent } from '../add-new-product-dialog/add-new-product-dialog.component';
 
 @Component({
   selector: 'app-home-page',
@@ -16,8 +21,6 @@ export class HomePageComponent implements OnInit {
 
   products?: ProductList[]
   productsBackup?: ProductList[]
-
-  menu: boolean = false;
 
   searchBar = new FormControl()
 
@@ -31,7 +34,13 @@ export class HomePageComponent implements OnInit {
 
   @ViewChildren("checkboxes") checkboxes?: QueryList<ElementRef>
 
-  constructor(private productManagementService: ProductManagementServiceService, private router: Router, private loginService: LoginService, private orderService: OrdersService) {
+  constructor(
+    private productManagementService: ProductManagementServiceService,
+    private router: Router,
+    private loginService: LoginService,
+    private orderService: OrdersService,
+    public dialog: MatDialog
+    ) {
     this.productManagementService.getProducts().subscribe(item => {
       this.products = (item as Product).products
       this.productsBackup = this.products
@@ -84,10 +93,6 @@ export class HomePageComponent implements OnInit {
     this.router.navigate(['/productDetails', id.toString()])
   }
 
-  showMenu() {
-    this.menu = !this.menu
-  }
-
   logout() {
     this.loginService.logout()
   }
@@ -99,5 +104,25 @@ export class HomePageComponent implements OnInit {
 
   sendProductToCart(){
       this.orderService.sendProductToCart()
+  }
+
+
+  //TODO implements this function that open a dialog to insert a new product
+  openAddNewProductDialog(){
+    const dialogRef = this.dialog.open(AddNewProductDialogComponent)
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != 'no') {
+        this.productManagementService.addNewProduct(result)
+        .subscribe({
+          next: response => {
+            console.log(response)
+          },
+          error: err => {
+            console.log(err)
+          }
+        })
+      }
+    })
   }
 }

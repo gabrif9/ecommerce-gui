@@ -1,0 +1,11 @@
+input {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+    width: 100%;
+    background-color:  rgb(243 244 246);
+}
+
+.input-style {
+  @apply border-black border-2 rounded-lg bg-gray-100 mt-3 w-full p-2
+}

@@ -10,6 +10,9 @@ export class ProductManagementServiceService {
 
   productSubject?: BehaviorSubject<Product[]>
 
+  token = sessionStorage.getItem('userToken')
+  headers = new HttpHeaders().set('Authorization', "Bearer " + this.token!)
+
   constructor(private http: HttpClient) { }
 
 
@@ -19,5 +22,9 @@ export class ProductManagementServiceService {
 
   getProductDetail(id: string) {
     return this.http.get('http://localhost:3000/products/' + id)
+  }
+
+  addNewProduct(productDetails: any) {
+    return this.http.post('http://localhost:3000/products/', productDetails, {headers: this.headers})
   }
 }
