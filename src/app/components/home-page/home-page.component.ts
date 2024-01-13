@@ -10,6 +10,7 @@ import {
 } from '@angular/material/dialog';
 import { AddNewProductDialogComponent } from '../add-new-product-dialog/add-new-product-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { NotificationService } from 'src/app/services/notification.service';
 
 export interface DialogCategoriesData {
   categories: string[]
@@ -41,8 +42,9 @@ export class HomePageComponent implements OnInit {
   constructor(
     private productManagementService: ProductManagementServiceService,
     private router: Router,
-    private loginService: LoginService,
+    public loginService: LoginService,
     private orderService: OrdersService,
+    private notificationService: NotificationService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
     ) {
@@ -125,9 +127,10 @@ export class HomePageComponent implements OnInit {
           next: (response: any) => {
             //trigger the snackbar
             console.log(response)
+            this.notificationService.notify('New product added', response.createdProduct._id)
             let snackbarRef = this._snackBar.open('New Product Added', 'Go To Details', {duration: 3000})
             snackbarRef.onAction().subscribe(() => {
-              this.goToNewProductDetails(response.createdProduct.request.url)
+              this.goToNewProductDetails(response.createdProduct._id)
             })
           },
           error: err => {

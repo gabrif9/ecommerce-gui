@@ -44,9 +44,9 @@
         </svg>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>Login</button>
+        <button *ngIf="!loginService.getAuthenticated()" mat-menu-item routerLink="/login">Login</button>
         <button mat-menu-item>Orders</button>
-        <button mat-menu-item>Logout</button>
+        <button *ngIf="loginService.getAuthenticated()" mat-menu-item (click)="logout()">Logout</button>
         <button mat-menu-item>Manage Orders</button>
       </mat-menu>
     </div>

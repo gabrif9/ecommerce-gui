@@ -30,6 +30,7 @@ export class LoginService{
         next: (res: any) => {
           sessionStorage.setItem('userToken', res.token)
           sessionStorage.setItem('userEmail', email)
+          this.authenticated = true
           this.router.navigate(['homePage'])
           return true
         },
@@ -59,6 +60,7 @@ export class LoginService{
   logout(){
     sessionStorage.removeItem('userToken')
     sessionStorage.removeItem('userEmail')
+    this.authenticated = false;
     this.router.navigate(['homePage'])
   }
 
