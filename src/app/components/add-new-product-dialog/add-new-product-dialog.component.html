@@ -10,9 +10,14 @@
         <div class="input-style">
           <input type="text" formControlName="price" placeholder="Price">
         </div>
-        <div class="input-style">
-          <input type="text" formControlName="category" placeholder="category">
+
+        <div class="bg-gray-200 rounded-lg flex items-center py-2 px-1 mt-3 border-black border-2">
+          <mat-label class="mr-3">Categories</mat-label>
+          <mat-select formControlName="category">
+              <mat-option *ngFor="let category of data.categories" [value]="category">{{category}}</mat-option>
+          </mat-select>
         </div>
+
         <div class="input-style">
           <input type="text" formControlName="description" placeholder="Description">
         </div>
@@ -28,10 +33,3 @@
     <button class="bg-green-500 rounded-lg px-2 py-1" (click)="onDoneClick()">Done</button>
   </div>
 </div>
-
-<!-- name: req.body.name,
-    price: req.body.price,
-    category: req.body.category,
-    description: req.body.description,
-    image: req.body.image,
-  -->

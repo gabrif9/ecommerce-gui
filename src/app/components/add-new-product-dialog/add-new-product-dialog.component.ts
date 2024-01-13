@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
+  MAT_DIALOG_DATA,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { DialogCategoriesData } from '../home-page/home-page.component';
 
 @Component({
   selector: 'app-add-new-product-dialog',
@@ -21,6 +23,7 @@ export class AddNewProductDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AddNewProductDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogCategoriesData,
   ) {}
 
   onCloseClick(): void {

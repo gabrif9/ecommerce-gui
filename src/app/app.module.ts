@@ -17,6 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import { AddNewProductDialogComponent } from './components/add-new-product-dialog/add-new-product-dialog.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { AddNewProductDialogComponent } from './components/add-new-product-dialo
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
+    MatSnackBarModule,
+    MatSelectModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

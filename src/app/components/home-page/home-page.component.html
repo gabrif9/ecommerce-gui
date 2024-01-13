@@ -88,9 +88,9 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-3 ms-2">
       <div class="shadow-lg shadow-gray-300 rounded-lg h-auto w-[250px] md:w-[200px] mt-5 me-7 md:me-0"
         *ngFor="let product of products">
-        <div class="flex text-sm justify-center mb-1 p-2 font-bold h-[70px]"><span>{{ product.name }}</span></div>
+        <div class="flex text-sm justify-center mb-1 p-2 font-bold h-[70px] overflow-hidden"><span>{{ product.name }}</span></div>
         <img [src]="product.image" alt="" class="h-[170px] w-full object-contain">
-        <div class="my-2 flex justify-end me-2"><span>Price: {{product.price}}</span></div>
+        <div class="my-2 flex justify-end me-2"><span>Price: {{product.price}}€</span></div>
 
         <div class="flex w-full">
           <div class="w-full p-1">

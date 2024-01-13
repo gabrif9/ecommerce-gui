@@ -6,11 +6,14 @@ import { LoginService } from 'src/app/services/login.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ProductManagementServiceService } from 'src/app/services/product-management-service.service';
 import {
-  MatDialogRef,
-  MatDialogClose,
   MatDialog
 } from '@angular/material/dialog';
 import { AddNewProductDialogComponent } from '../add-new-product-dialog/add-new-product-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
+export interface DialogCategoriesData {
+  categories: string[]
+}
 
 @Component({
   selector: 'app-home-page',
@@ -24,12 +27,13 @@ export class HomePageComponent implements OnInit {
 
   searchBar = new FormControl()
 
-  categories: string[] = ["men's clothing", "jewelery", "electronics", "women's clothing"]
+  categories: string[] = ["men's clothing", "jewelery", "electronics", "women's clothing", "kitchen"]
   selectedCategories = {
     "men's clothing": false,
     "jewelery": false,
     "electronics": false,
     "women's clothing": false,
+    "kitchen": false
   }
 
   @ViewChildren("checkboxes") checkboxes?: QueryList<ElementRef>
@@ -39,7 +43,8 @@ export class HomePageComponent implements OnInit {
     private router: Router,
     private loginService: LoginService,
     private orderService: OrdersService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
     ) {
     this.productManagementService.getProducts().subscribe(item => {
       this.products = (item as Product).products
@@ -109,14 +114,21 @@ export class HomePageComponent implements OnInit {
 
   //TODO implements this function that open a dialog to insert a new product
   openAddNewProductDialog(){
-    const dialogRef = this.dialog.open(AddNewProductDialogComponent)
+    const dialogRef = this.dialog.open(AddNewProductDialogComponent, {
+      data: {categories: this.categories}
+    })
 
     dialogRef.afterClosed().subscribe(result => {
       if(result != 'no') {
         this.productManagementService.addNewProduct(result)
         .subscribe({
-          next: response => {
+          next: (response: any) => {
+            //trigger the snackbar
             console.log(response)
+            let snackbarRef = this._snackBar.open('New Product Added', 'Go To Details', {duration: 3000})
+            snackbarRef.onAction().subscribe(() => {
+              this.goToNewProductDetails(response.createdProduct.request.url)
+            })
           },
           error: err => {
             console.log(err)
@@ -124,5 +136,9 @@ export class HomePageComponent implements OnInit {
         })
       }
     })
+  }
+
+  goToNewProductDetails(url: string){
+
   }
 }

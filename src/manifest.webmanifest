@@ -1,6 +1,6 @@
 {
-  "name": "ecommerce-gui",
-  "short_name": "ecommerce-gui",
+  "name": "Ecommerce Gui",
+  "short_name": "Ecommerce Gui",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
