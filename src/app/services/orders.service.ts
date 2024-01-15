@@ -1,14 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ProductList } from '../module/product.module';
+import { Product } from '../module/product.module';
 import { BehaviorSubject } from 'rxjs';
+import { Order } from '../module/order.module';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
 
-  tmpProductToAddToCart: ProductList[] = new Array
+  tmpProductToAddToCart: Order[] = new Array
 
   productsToCartSubject: BehaviorSubject<any> = new BehaviorSubject('')
 
@@ -26,13 +27,17 @@ export class OrdersService {
     return this.http.delete(`http://localhost:3000/orders/${id}`, { headers: this.headers })
   }
 
+  addNewOrder(order: Order) {
+    return this.http.post('http://localhost:3000/orders', {productId: order.product._id, quantity: order.quantity},{headers: this.headers})
+  }
+
   sendProductToCart() {
     console.log(this.tmpProductToAddToCart, 'nuovi prodotti aggiunti al carrello')
     this.productsToCartSubject.next(this.tmpProductToAddToCart)
   }
 
   //save the product in a tmp array
-  addProductToCart(product: ProductList) {
+  addProductToCart(product: Order) {
     this.tmpProductToAddToCart.push(product)
   }
 }

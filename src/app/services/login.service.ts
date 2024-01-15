@@ -62,6 +62,10 @@ export class LoginService{
     sessionStorage.removeItem('role')
     this.router.navigate(['homePage'])
   }
+
+  getAuthenticated() {
+    return (!!sessionStorage.getItem('userToken'))
+  }
 }
 
 export const authGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {

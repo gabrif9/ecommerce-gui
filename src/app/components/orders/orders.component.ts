@@ -18,6 +18,10 @@ export class OrdersComponent {
     })
   }
 
+  addNewOrder() {
+    
+  }
+
   deleteOrder(id: string){
     this.ordersService.deleteOrder(id).subscribe({
       next: (res) => {

@@ -1,9 +1,9 @@
-export interface Product {
+export interface ProductListDetails {
   count: number
-  products: ProductList[]
+  products: Product[]
 }
 
-export interface ProductList {
+export interface Product {
   _id: number
   name: string
   price: number

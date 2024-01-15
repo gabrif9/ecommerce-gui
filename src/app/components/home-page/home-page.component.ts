@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Product, ProductList } from 'src/app/module/product.module';
+import { Product, ProductListDetails } from 'src/app/module/product.module';
 import { LoginService } from 'src/app/services/login.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ProductManagementServiceService } from 'src/app/services/product-management-service.service';
@@ -11,6 +11,8 @@ import {
 import { AddNewProductDialogComponent } from '../add-new-product-dialog/add-new-product-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/services/notification.service';
+import { SelectQuantityDialogComponent } from '../select-quantity-dialog/select-quantity-dialog.component';
+import { Order } from 'src/app/module/order.module';
 
 export interface DialogCategoriesData {
   categories: string[]
@@ -23,8 +25,8 @@ export interface DialogCategoriesData {
 })
 export class HomePageComponent implements OnInit {
 
-  products?: ProductList[]
-  productsBackup?: ProductList[]
+  products?: Product[]
+  productsBackup?: Product[]
 
   searchBar = new FormControl()
 
@@ -52,7 +54,7 @@ export class HomePageComponent implements OnInit {
     private _snackBar: MatSnackBar,
     ) {
     this.productManagementService.getProducts().subscribe(item => {
-      this.products = (item as Product).products
+      this.products = (item as ProductListDetails).products
       this.productsBackup = this.products
       // console.log(this.products)
     })
@@ -114,11 +116,6 @@ export class HomePageComponent implements OnInit {
     this.sessionStorageToken = false;
   }
 
-  //when the user press "buy" button
-  addProductToCart(productToAdd: ProductList) {
-    this.orderService.addProductToCart(productToAdd)
-  }
-
   sendProductToCart(){
       this.orderService.sendProductToCart()
   }
@@ -138,9 +135,9 @@ export class HomePageComponent implements OnInit {
             //trigger the snackbar
             console.log(response)
             this.notificationService.notify('New product added', response.createdProduct._id)
-            let snackbarRef = this._snackBar.open('New Product Added', 'Go To Details', {duration: 3000})
+            let snackbarRef = this._snackBar.open('New Product Added', 'Refresh Page', {duration: 3000})
             snackbarRef.onAction().subscribe(() => {
-              this.goToNewProductDetails(response.createdProduct._id)
+              window.location.reload()
             })
           },
           error: err => {
@@ -151,7 +148,19 @@ export class HomePageComponent implements OnInit {
     })
   }
 
-  goToNewProductDetails(url: string){
+  openQuantityDialog(productToAdd: Product) {
+    const dialogRef = this.dialog.open(SelectQuantityDialogComponent)
 
+    dialogRef.afterClosed().subscribe(quantity => {
+      if(quantity > 0) {
+        //add this quantity to the product selected with the buy button
+        let order: Order = {
+          product: productToAdd,
+          quantity: quantity
+        }
+
+        this.orderService.addProductToCart(order)
+      }
+    })
   }
 }
