@@ -28,9 +28,9 @@
       <div>{{ productSelected?.description }}</div>
     </div>
 
-    <div class="mt-[130px] flex justify-between">
-      <div><button class="rounded-lg p-3 bg-blue-400 min-w-[100px]">Buy</button></div>
-      <div><button class="rounded-lg p-3 bg-orange-400 min-w-[100px]">Add To Cart</button></div>
+    <div [ngClass]="userRole === 'Admin' ? 'justify-between' : 'justify-center' " class="mt-[130px] flex">
+      <div><button class="rounded-lg p-3 bg-orange-400 min-w-[100px]" (click)="addProductToCart()">Add To Cart</button></div>
+      <div *ngIf="userRole === 'Admin'"><button class="rounded-lg p-3 bg-red-600 min-w-[100px]" (click)="removeProduct(productSelected!._id)">Remove Product</button></div>
     </div>
   </div>
 </div>

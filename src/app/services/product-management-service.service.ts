@@ -8,8 +8,6 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ProductManagementServiceService {
 
-  productSubject?: BehaviorSubject<Product[]>
-
   token = sessionStorage.getItem('userToken')
   headers = new HttpHeaders().set('Authorization', "Bearer " + this.token!)
 
@@ -26,5 +24,9 @@ export class ProductManagementServiceService {
 
   addNewProduct(productDetails: any) {
     return this.http.post('http://localhost:3000/products/', productDetails, {headers: this.headers})
+  }
+
+  removeProduct(id: number) {
+    return this.http.delete('http://localhost:3000/products/' + id)
   }
 }

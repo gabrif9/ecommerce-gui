@@ -40,4 +40,9 @@ export class OrdersService {
   addProductToCart(product: Order) {
     this.tmpProductToAddToCart.push(product)
   }
+
+  addProductToCartFromProductDetails(product: Order) {
+    this.addProductToCart(product)
+    this.productsToCartSubject.next(this.tmpProductToAddToCart)
+  }
 }
