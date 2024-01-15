@@ -128,7 +128,7 @@ export class HomePageComponent implements OnInit {
     })
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result != 'no') {
+      if(result != 'no' && !!result) {
         this.productManagementService.addNewProduct(result)
         .subscribe({
           next: (response: any) => {

@@ -33,7 +33,7 @@ export class AddNewProductDialogComponent {
   onDoneClick(): void {
     let productDetails = {
       name: this.productDetailsFormGroup.controls.name.value,
-      price: this.productDetailsFormGroup.controls.price.value,
+      price: this.productDetailsFormGroup.controls.price.value?.replace(('/,/'),'.'),
       category: this.productDetailsFormGroup.controls.category.value,
       description: this.productDetailsFormGroup.controls.description.value,
       image: this.productDetailsFormGroup.controls.image.value,

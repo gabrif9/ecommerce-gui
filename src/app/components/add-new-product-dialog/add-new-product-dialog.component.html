@@ -8,7 +8,7 @@
           <input id="name" type="text" formControlName="name" placeholder="Name">
         </div>
         <div class="input-style">
-          <input type="text" formControlName="price" placeholder="Price">
+          <input type="number" formControlName="price" placeholder="Price">
         </div>
 
         <div class="bg-gray-200 rounded-lg flex items-center py-2 px-1 mt-3 border-black border-2">
@@ -22,7 +22,7 @@
           <input type="text" formControlName="description" placeholder="Description">
         </div>
         <div class="input-style">
-          <input type="text" formControlName="image" placeholder="Image">
+          <input type="text" formControlName="image" placeholder="Image Link">
         </div>
 
       </form>
@@ -30,6 +30,6 @@
   </div>
   <div class="flex justify-between px-3">
     <button class="bg-red-500 rounded-lg px-2 py-1" (click)="onCloseClick()">Close</button>
-    <button class="bg-green-500 rounded-lg px-2 py-1" (click)="onDoneClick()">Done</button>
+    <button [disabled]="!productDetailsFormGroup.valid" [ngClass]="productDetailsFormGroup.valid ? 'bg-green-500' : 'bg-gray-300' " class=" rounded-lg px-2 py-1" (click)="onDoneClick()">Done</button>
   </div>
 </div>
