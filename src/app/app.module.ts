@@ -20,6 +20,7 @@ import { AddNewProductDialogComponent } from './components/add-new-product-dialo
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
 import { SelectQuantityDialogComponent } from './components/select-quantity-dialog/select-quantity-dialog.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SelectQuantityDialogComponent } from './components/select-quantity-dial
     CartComponent,
     AddNewProductDialogComponent,
     SelectQuantityDialogComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
