@@ -37,6 +37,9 @@ export class HomePageComponent implements OnInit {
     "kitchen": false
   }
 
+  sessionStorageToken = false
+  userRole: string = ''
+
   @ViewChildren("checkboxes") checkboxes?: QueryList<ElementRef>
 
   constructor(
@@ -46,7 +49,7 @@ export class HomePageComponent implements OnInit {
     private orderService: OrdersService,
     private notificationService: NotificationService,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
     ) {
     this.productManagementService.getProducts().subscribe(item => {
       this.products = (item as Product).products
@@ -58,6 +61,12 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    if(sessionStorage.getItem('userToken')) {
+      this.sessionStorageToken = true
+      this.userRole = sessionStorage.getItem('role')!
+    }
+
+
     this.searchBar.valueChanges.subscribe((ele: string) => {
       if (ele.length > 1) {
         this.products = this.productsBackup?.filter(item => {
@@ -102,6 +111,7 @@ export class HomePageComponent implements OnInit {
 
   logout() {
     this.loginService.logout()
+    this.sessionStorageToken = false;
   }
 
   //when the user press "buy" button

@@ -44,10 +44,9 @@
         </svg>
       </button>
       <mat-menu #menu="matMenu">
-        <button *ngIf="!loginService.getAuthenticated()" mat-menu-item routerLink="/login">Login</button>
-        <button mat-menu-item>Orders</button>
-        <button *ngIf="loginService.getAuthenticated()" mat-menu-item (click)="logout()">Logout</button>
-        <button mat-menu-item>Manage Orders</button>
+        <button *ngIf="!sessionStorageToken" mat-menu-item routerLink="/login">Login</button>
+        <button mat-menu-item routerLink="/orders">Orders</button>
+        <button *ngIf="sessionStorageToken" mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
     </div>
   </div>
@@ -61,6 +60,15 @@
   </ul>
 </div>
 
+<div *ngIf="userRole === 'Admin' " class="md:hidden flex justify-center">
+  <div class="flex justify-center">
+    <button (click)="openAddNewProductDialog()" class="mt-5 flex items-center bg-red-500 w-auto rounded-lg px-10 py-1">
+      <span class="text-lg mr-2">New Product</span>
+      <mat-icon class="mat-18">add</mat-icon>
+    </button>
+  </div>
+</div>
+
 
 <div class="mt-5 flex h-screen">
   <!-- categories filter -->
@@ -71,7 +79,7 @@
             class="text-sm">{{ category | uppercase }}</span></li>
       </ul>
 
-      <div class="flex justify-center">
+      <div *ngIf="userRole === 'Admin' " class="flex justify-center">
         <button (click)="openAddNewProductDialog()" class="mt-5 flex items-center bg-red-500 w-auto rounded-lg px-2 py-1">
           <span class="text-lg mr-2">New Product</span>
           <mat-icon class="mat-18">add</mat-icon>

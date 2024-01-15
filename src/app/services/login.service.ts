@@ -8,8 +8,6 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoginService{
 
-  private authenticated: boolean = false;
-
   resMessageSubject: BehaviorSubject<string> = new BehaviorSubject('')
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -25,12 +23,13 @@ export class LoginService{
   }
 
   signIn(email: string, password: string) {
-    if (!this.authenticated) {
+    if (!sessionStorage.getItem('userToken')) {
       this.http.post('http://localhost:3000/user/login', { email: email, password: password }).subscribe({
         next: (res: any) => {
+          console.log(res.role)
           sessionStorage.setItem('userToken', res.token)
           sessionStorage.setItem('userEmail', email)
-          this.authenticated = true
+          sessionStorage.setItem('role', res.role)
           this.router.navigate(['homePage'])
           return true
         },
@@ -42,7 +41,7 @@ export class LoginService{
   }
 
   signUp(email: string, password: string) {
-    if (!this.authenticated) {
+    if (!sessionStorage.getItem('userToken')) {
       this.http.post('http://localhost:3000/user/signup', { email: email, password: password }).subscribe({
         next: (res: any) => {
           this.signIn(email, password)
@@ -60,11 +59,9 @@ export class LoginService{
   logout(){
     sessionStorage.removeItem('userToken')
     sessionStorage.removeItem('userEmail')
-    this.authenticated = false;
+    sessionStorage.removeItem('role')
     this.router.navigate(['homePage'])
   }
-
-  getAuthenticated() { return this.authenticated }
 }
 
 export const authGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
